@@ -1,6 +1,7 @@
 import { React, Fragment, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, incrementAsync, selectCount } from "./productListSlice";
+// import { increment, incrementAsync, selectCount } from "../productListSlice";
+import { increment, incrementAsync, selectCount } from "../productListSlice"
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -11,6 +12,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import { Link } from "react-router-dom";
 
 const items = [
   { id: 1, title: 'Back End Developer', department: 'Engineering', type: 'Full-time', location: 'Remote' },
@@ -376,6 +378,7 @@ export default function ProductList() {
 
                           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                             {products.map((product) => (
+                              <Link to='./product-details'>
                               <div key={product.id} className="group relative">
                                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                                   <img
@@ -404,6 +407,7 @@ export default function ProductList() {
                                   </p>
                                 </div>
                               </div>
+                              </Link>
                             ))}
                           </div>
                         </div>
