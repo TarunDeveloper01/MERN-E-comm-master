@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import Home from "./pages/Home";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import LoginPage from "./pages/LoginPage";
@@ -14,11 +13,7 @@ import Navbar from "./features/navbar/Navbar";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <Navbar>
-        <Home />
-      </Navbar>
-    ),
+    element: <Home />,
   },
   {
     path: "/login",
