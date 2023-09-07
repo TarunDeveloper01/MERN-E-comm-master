@@ -7,7 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import CartPage from "./pages/CartPage";
 import CheckOut from "./pages/CheckOut";
-import ProductDetails from "./features/Product-list/Components/ProductDetails";
+import ProductDetails from "./features/product/Components/ProductDetails";
 import Navbar from "./features/navbar/Navbar";
 
 const router = createBrowserRouter([

@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
+import { Link } from "react-router-dom";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -231,12 +232,12 @@ const ProductDetails = () => {
                 <div className="mt-10">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                    <a
-                      href="#"
+                    <Link
+                      to="#"
                       className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       Size guide
-                    </a>
+                    </Link>
                   </div>
 
                   <RadioGroup
