@@ -209,9 +209,7 @@ export default function ProductList() {
     dispatch(fetchAllProductsAsync());
   }, [dispatch]);
 
-  const handleFilter = () => {
-    
-  };
+  const handleFilter = () => {};
 
   return (
     <>
