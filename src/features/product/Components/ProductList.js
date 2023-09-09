@@ -209,7 +209,10 @@ export default function ProductList() {
     dispatch(fetchAllProductsAsync());
   }, [dispatch]);
 
-  const handleFilter = () => {};
+  const handleFilter = (e, section, option) => {
+    // e.preventDefault();
+    console.log(section.id, option.value);
+  };
 
   return (
     <>
@@ -452,7 +455,9 @@ export default function ProductList() {
                                         defaultValue={option.value}
                                         type="checkbox"
                                         defaultChecked={option.checked}
-                                        onChange={(e) => handleFilter()}
+                                        onChange={(e) =>
+                                          handleFilter(e, section, option)
+                                        }
                                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                       />
                                       <label
