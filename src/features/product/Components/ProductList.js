@@ -1,6 +1,9 @@
 import { React, Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAllProductsAsync } from "../productSlice";
+import {
+  fetchAllProductsAsync,
+  fetchAllProductsFiltersAsync,
+} from "../productSlice";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -18,11 +21,9 @@ import {
 import { Link } from "react-router-dom";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Best Rating", sort: "rating", order: "desc", current: false },
+  { name: "Price: Low to High", sort: "price", order: "asc", current: false },
+  { name: "Price: High to Low", sort: "price", order: "desc", current: false },
 ];
 
 const filters = [
@@ -32,7 +33,7 @@ const filters = [
     options: [
       { value: "new-arrivals", label: "New Arrivals", checked: false },
       { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
+      { value: "travel", label: "Travel", checked: false },
       { value: "organization", label: "Organization", checked: false },
       { value: "accessories", label: "Accessories", checked: false },
       { value: "smartphones", label: "smartphones", checked: false },
@@ -58,7 +59,7 @@ const filters = [
     ],
   },
   {
-    id: "brands",
+    id: "brand",
     name: "Brands",
     options: [
       { value: "Apple", label: "Apple", checked: false },
@@ -202,16 +203,24 @@ function classNames(...classes) {
 export default function ProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const dispatch = useDispatch();
+  const [SortArray, setSortArray] = useState([]);
   const products = useSelector((state) => state.product.products);
-  // console.log(products);
 
   useEffect(() => {
     dispatch(fetchAllProductsAsync());
   }, [dispatch]);
 
-  const handleFilter = (e, section, option) => {
-    // e.preventDefault();
-    console.log(section.id, option.value);
+  const handleFilter = (e, section, option, sort, order) => {
+    // const newSortArr = [...SortArray];
+    // if (newSortArr.includes(`${section.id}=${option.value}`)) {
+    //   const index = newSortArr.indexOf(`${section.id}=${option.value}`);
+    //   newSortArr.splice(index, 1);
+    // } else {
+    //   newSortArr.push(`${section.id}=${option.value}`);
+    // }
+    // setSortArray(newSortArr);
+
+    // dispatch(fetchAllProductsFiltersAsync(newSortArr));
   };
 
   return (
@@ -296,6 +305,7 @@ export default function ProductList() {
                                   </h3>
                                   <Disclosure.Panel className="pt-6">
                                     <div className="space-y-6">
+                                      {console.log(section.name)}
                                       {section.options.map(
                                         (option, optionIdx) => (
                                           <div
@@ -308,6 +318,9 @@ export default function ProductList() {
                                               name={`${section.id}[]`}
                                               defaultValue={option.value}
                                               type="checkbox"
+                                              onChange={(e) =>
+                                                handleFilter(e, section, option)
+                                              }
                                               defaultChecked={option.checked}
                                               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                             />
@@ -365,8 +378,17 @@ export default function ProductList() {
                             {sortOptions.map((option) => (
                               <Menu.Item key={option.name}>
                                 {({ active }) => (
-                                  <a
-                                    href={option.href}
+                                  <Link
+                                    to={option.href}
+                                    onClick={() =>
+                                      handleFilter(
+                                        "",
+                                        "",
+                                        "",
+                                        option.sort,
+                                        option.order
+                                      )
+                                    }
                                     className={classNames(
                                       option.current
                                         ? "font-medium text-gray-900"
@@ -376,7 +398,7 @@ export default function ProductList() {
                                     )}
                                   >
                                     {option.name}
-                                  </a>
+                                  </Link>
                                 )}
                               </Menu.Item>
                             ))}
