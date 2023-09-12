@@ -1,5 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchAllProducts, fetchAllProductsByFilters } from "./productAPI";
+ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  fetchAllProducts,
+  fetchAllProductsByFilters,
+  fetchAllProductsSort,
+} from "./productAPI";
 // import { logDOM } from "@testing-library/react";
 
 const initialState = {
@@ -9,8 +13,9 @@ const initialState = {
 
 export const fetchAllProductsAsync = createAsyncThunk(
   "product/fetchAllProducts",
-  async () => {
-    const response = await fetchAllProducts();
+  async (page) => {
+    // console.log(page)
+    const response = await fetchAllProducts(page);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -18,13 +23,23 @@ export const fetchAllProductsAsync = createAsyncThunk(
 
 export const fetchAllProductsFiltersAsync = createAsyncThunk(
   "product/fetchAllProductsByFilters",
-  async (filter) => {
-    const response = await fetchAllProductsByFilters(filter);
+  async (filter, page) => {
+    const response = await fetchAllProductsByFilters(filter, page);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );
 
+export const fetchAllProductsSortAsync = createAsyncThunk(
+  "product/fetchAllProductsSort",
+  async ({ sort, order, SortArray, page }) => {
+    // console.log(sort,order,SortArray)
+    const response = await fetchAllProductsSort(sort, order, SortArray, page);
+    // The value we return becomes the `fulfilled` action payload
+    console.log("data", response.data);
+    return response.data;
+  }
+);
 
 export const productSlice = createSlice({
   name: "product",
@@ -50,6 +65,13 @@ export const productSlice = createSlice({
         state.status = "idle";
         state.products = action.payload;
       })
+      .addCase(fetchAllProductsSortAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAllProductsSortAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.products = action.payload;
+      });
   },
 });
 

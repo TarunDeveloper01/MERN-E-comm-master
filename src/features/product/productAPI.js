@@ -1,6 +1,26 @@
-export function fetchAllProducts() {
+export function fetchAllProducts(page) {
+  // console.log(page);
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/products");
+    const response = await fetch(
+      `http://localhost:8080/products?_page=${page}&limit=10`
+    );
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+
+export function fetchAllProductsSort(sort, order, arr, page) {
+  let queryString = "";
+  for (let i = 0; i < arr.length; i++) {
+    queryString += `${arr[i]}&`;
+  }
+  return new Promise(async (resolve) => {
+    const response = await fetch(
+      "http://localhost:8080/products?" +
+        queryString +
+        `_sort=${sort}&_order=${order}` +
+        `&_page=${1}&limit=10`
+    );
     const data = await response.json();
     resolve({ data });
   });
@@ -8,7 +28,7 @@ export function fetchAllProducts() {
 
 // http://localhost:8080/products?_sort=price&_order=asc
 
-export function fetchAllProductsByFilters(arr) {
+export function fetchAllProductsByFilters(arr, page) {
   let queryString = "";
   for (let i = 0; i < arr.length; i++) {
     queryString += `${arr[i]}&`;
@@ -16,7 +36,7 @@ export function fetchAllProductsByFilters(arr) {
   console.log("Qywerq", queryString);
   return new Promise(async (resolve) => {
     const response = await fetch(
-      "http://localhost:8080/products?" + queryString
+      "http://localhost:8080/products?" + queryString + `&_page=${1}&limit=10`
     );
     const data = await response.json();
     console.log("filterData", data);
