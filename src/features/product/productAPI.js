@@ -9,7 +9,16 @@ export function fetchAllProducts(page) {
   });
 }
 
-export function fetchAllProductsSort(sort, order, arr, page) {
+export function fetchAllProductsId(id) {
+  // console.log(page);
+  return new Promise(async (resolve) => {
+    const response = await fetch(`http://localhost:8080/products/` + id);
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+
+export function fetchAllProductsSort(sort, order, arr) {
   let queryString = "";
   for (let i = 0; i < arr.length; i++) {
     queryString += `${arr[i]}&`;
@@ -28,12 +37,12 @@ export function fetchAllProductsSort(sort, order, arr, page) {
 
 // http://localhost:8080/products?_sort=price&_order=asc
 
-export function fetchAllProductsByFilters(arr, page) {
+export function fetchAllProductsByFilters(arr) {
   let queryString = "";
   for (let i = 0; i < arr.length; i++) {
     queryString += `${arr[i]}&`;
   }
-  console.log("Qywerq", queryString);
+  console.log("Qywerq", queryString, arr);
   return new Promise(async (resolve) => {
     const response = await fetch(
       "http://localhost:8080/products?" + queryString + `&_page=${1}&limit=10`
