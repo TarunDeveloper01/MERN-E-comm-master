@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [login, setLogin] = useState({
@@ -16,14 +18,37 @@ const Login = () => {
 
   const handleSubmit = () => {
     axios
-      .post("http://192.168.1.10:8080/api/login", login)
+      .post(`${process.env.REACT_APP_BASE_URL}/login`, login)
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
-        navigate("/");
+        // console.log(res.data);
+        toast.success(res.data.msg, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        localStorage.setItem("loginauth", JSON.stringify(res.data));
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Login Failed", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       });
   };
   return (
@@ -115,6 +140,18 @@ const Login = () => {
           </p>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 };

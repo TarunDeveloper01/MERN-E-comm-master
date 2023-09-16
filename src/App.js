@@ -9,16 +9,22 @@ import CartPage from "./pages/CartPage";
 import CheckOut from "./pages/CheckOut";
 import ProductDetails from "./features/product/Components/ProductDetails";
 import Navbar from "./features/navbar/Navbar";
+import ProctectedRoute from "./ProctectedRoute";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
   {
     path: "/login",
     element: <LoginPage />,
   },
+  {
+    path: "/",
+    element: (
+      <ProctectedRoute>
+        <Home />
+      </ProctectedRoute>
+    ),
+  },
+
   {
     path: "/signup",
     element: <SignUpPage />,
