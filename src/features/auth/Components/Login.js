@@ -3,12 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { IsLoginFunction } from "../authSlice";
 
 const Login = () => {
   const [login, setLogin] = useState({
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
   const [data, setData] = useState();
   const navigate = useNavigate();
 
@@ -22,6 +25,7 @@ const Login = () => {
       .then((res) => {
         setData(res.data);
         // console.log(res.data);
+        dispatch(IsLoginFunction(true));
         toast.success(res.data.msg, {
           position: "top-center",
           autoClose: 2000,

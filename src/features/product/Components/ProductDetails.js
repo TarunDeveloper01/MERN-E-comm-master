@@ -5,6 +5,7 @@ import { RadioGroup } from "@headlessui/react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProductsIdAsync, selectProductById } from "../productSlice";
+import { addToCart } from "../../cart/chartApi";
 
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -43,6 +44,10 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(fetchAllProductsIdAsync(param.id));
   }, [dispatch, param.id]);
+
+  const handleCart = (e) => {
+    addToCart({ ...product, quantity: 1 });
+  };
   return (
     <>
       <div className="bg-white">
@@ -288,6 +293,7 @@ const ProductDetails = () => {
 
                   <button
                     type="button"
+                    onClick={handleCart}
                     className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
                     Add to Cart

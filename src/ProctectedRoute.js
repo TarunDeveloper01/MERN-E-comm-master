@@ -1,10 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const ProctectedRoute = ({ children }) => {
-  const isLogged = JSON.parse(localStorage.getItem("loginauth"));
+  const isLogged = useSelector((state)=>state.login)
 
-  if (!isLogged?.token) return <Navigate to="/login" replace />;
+  if (!isLogged.isLogin) return <Navigate to="/login" replace />;
 
   return children;
 };
