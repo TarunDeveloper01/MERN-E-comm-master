@@ -21,7 +21,7 @@ const Login = () => {
 
   const handleSubmit = () => {
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/login`, login)
+      .post(`${process.env.REACT_APP_BASE_URL}/user/login`, login)
       .then((res) => {
         setData(res.data);
         // console.log(res.data);
@@ -39,7 +39,7 @@ const Login = () => {
         localStorage.setItem("loginauth", JSON.stringify(res.data));
         setTimeout(() => {
           navigate("/");
-        }, 2000);
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);

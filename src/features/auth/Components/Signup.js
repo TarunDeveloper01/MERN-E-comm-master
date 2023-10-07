@@ -9,7 +9,7 @@ const Signup = () => {
     email: "",
     password: "",
     username: "",
-    avatar: "uiflkfklkddcld",
+    address:{}
   });
   const [data, setData] = useState();
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Signup = () => {
 
   const handleSubmit = () => {
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/register`, login)
+      .post(`${process.env.REACT_APP_BASE_URL}/user/register`, login)
       .then((res) => {
         setData(res.data);
         console.log(res.data);
